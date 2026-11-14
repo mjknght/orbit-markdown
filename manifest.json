@@ -1,0 +1,9 @@
+{
+  "id": "orbit-markdown",
+  "name": "Orbit Markdown",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Hides {braces} off the active line and mutes their contents; mutes Q. and A. line markers.",
+  "author": "Mark",
+  "isDesktopOnly": false
+}

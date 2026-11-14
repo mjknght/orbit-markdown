@@ -1,0 +1,5 @@
+.cm-orbit-brace { color: var(--text-faint); }
+.cm-orbit-braced { color: var(--text-muted); }
+
+.cm-orbit-qa,
+.orbit-qa { color: var(--text-muted); }
