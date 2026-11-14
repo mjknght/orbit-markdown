@@ -1,7 +1,9 @@
 name: Release
 on:
   push:
-    tags: ["*"]
+    branches: [main]
+    paths: [manifest.json, main.js, styles.css, .github/workflows/release.yml]
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -9,7 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create release with plugin files
+      - name: Release the version in manifest.json, if not already released
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${GITHUB_REF_NAME}" main.js manifest.json styles.css --title "${GITHUB_REF_NAME}" --notes "Orbit Markdown ${GITHUB_REF_NAME}"
+        run: |
+          VERSION=$(jq -r .version manifest.json)
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "Release $VERSION already exists; nothing to do."
+          else
+            gh release create "$VERSION" main.js manifest.json styles.css \
+              --target "$GITHUB_SHA" --title "$VERSION" --notes "Orbit Markdown $VERSION"
+          fi
